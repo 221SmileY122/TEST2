@@ -3,24 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>С 8 МАРТА!</title>
+    <title>С 8 Марта!</title>
     <style>
+        /* Основные стили */
         body {
+            margin: 0;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
         }
+
+        /* Контейнер для текста */
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px 60px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        /* Заголовок */
         h1 {
-            font-size: 5em;
-            color: #ff4081;
+            font-size: 72px;
+            color: #d6336c;
+            margin: 0;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Подзаголовок */
+        p {
+            font-size: 24px;
+            color: #555;
+            margin-top: 20px;
+        }
+
+        /* Анимация появления */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Анимация плавания */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Эффект снежинок */
+        .snowflakes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .snowflake {
+            position: absolute;
+            color: #fff;
+            font-size: 24px;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10%);
+            }
+            100% {
+                transform: translateY(110%);
+            }
         }
     </style>
 </head>
 <body>
-    <h1>С 8 МАРТА!</h1>
+    <!-- Контейнер с текстом -->
+    <div class="container">
+        <h1>С 8 МАРТА!</h1>
+        <p>Пусть весна принесёт вам радость, тепло и вдохновение!</p>
+    </div>
+
+    <!-- Снежинки -->
+    <div class="snowflakes">
+        <!-- Генерация снежинок -->
+        <script>
+            const snowflakesContainer = document.querySelector('.snowflakes');
+            const snowflakeCount = 50;
+
+            for (let i = 0; i < snowflakeCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.classList.add('snowflake');
+                snowflake.innerHTML = '❄';
+                snowflake.style.left = `${Math.random() * 100}%`;
+                snowflake.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                snowflake.style.animationDelay = `${Math.random() * 5}s`;
+                snowflake.style.opacity = Math.random();
+                snowflakesContainer.appendChild(snowflake);
+            }
+        </script>
+    </div>
 </body>
 </html>
