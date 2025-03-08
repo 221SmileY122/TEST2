@@ -26,6 +26,8 @@
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             animation: fadeIn 2s ease-in-out;
+            position: relative;
+            z-index: 2;
         }
 
         /* Заголовок */
@@ -41,6 +43,33 @@
             font-size: 24px;
             color: #555;
             margin-top: 20px;
+        }
+
+        /* Кнопка */
+        .button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 30px;
+            font-size: 20px;
+            color: #fff;
+            background: #d6336c;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+            box-shadow: 0 5px 15px rgba(214, 51, 108, 0.4);
+        }
+
+        .button:hover {
+            transform: scale(1.1);
+            background: #ff6b6b;
+        }
+
+        /* Подпись под кнопкой */
+        .signature {
+            margin-top: 15px;
+            font-size: 16px;
+            color: #777;
         }
 
         /* Анимация появления */
@@ -91,6 +120,25 @@
                 transform: translateY(110%);
             }
         }
+
+        /* Анимация цветов */
+        .flower {
+            position: absolute;
+            font-size: 30px;
+            animation: explode 1.5s ease-out forwards;
+            z-index: 3;
+        }
+
+        @keyframes explode {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--x), var(--y)) scale(0);
+            }
+        }
     </style>
 </head>
 <body>
@@ -98,6 +146,12 @@
     <div class="container">
         <h1>С 8 МАРТА!</h1>
         <p>Пусть весна принесёт вам радость, тепло и вдохновение!</p>
+
+        <!-- Кнопка -->
+        <button class="button" id="flowerButton">Нажми, чтобы получить букет цветов</button>
+
+        <!-- Подпись -->
+        <div class="signature">Бери столько, сколько хочешь, потому что ты этого достойна!</div>
     </div>
 
     <!-- Снежинки -->
@@ -119,5 +173,29 @@
             }
         </script>
     </div>
+
+    <!-- Скрипт для анимации цветов -->
+    <script>
+        const button = document.getElementById('flowerButton');
+        const container = document.querySelector('.container');
+
+        button.addEventListener('click', () => {
+            for (let i = 0; i < 20; i++) { // Количество цветов
+                const flower = document.createElement('div');
+                flower.classList.add('flower');
+                flower.innerHTML = '🌹'; // Эмодзи розы
+                flower.style.left = `${Math.random() * 100}%`;
+                flower.style.top = `${Math.random() * 100}%`;
+                flower.style.setProperty('--x', `${(Math.random() - 0.5) * 500}px`);
+                flower.style.setProperty('--y', `${(Math.random() - 0.5) * 500}px`);
+                container.appendChild(flower);
+
+                // Удаляем цветок после завершения анимации
+                flower.addEventListener('animationend', () => {
+                    flower.remove();
+                });
+            }
+        });
+    </script>
 </body>
 </html>
