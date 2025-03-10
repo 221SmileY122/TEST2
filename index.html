@@ -7,13 +7,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Контейнер игры -->
     <div class="game-container">
         <!-- Главный экран -->
         <div class="main-screen">
             <h1>Розовая Вселенная</h1>
             <p>Создай свою империю роз!</p>
             <div class="rose-counter">Розы: <span id="roseCount">0</span></div>
-            <button class="rose-button" id="flowerButton">Собрать розы</button>
+            <button class="rose-button pulse" id="flowerButton">Собрать розы</button>
             <button class="skill-tree-button" id="openSkillTree">Древо Навыков</button>
         </div>
 
@@ -27,23 +28,21 @@
                 </div>
             </div>
         </div>
-
-        <!-- Вселенная роз (фон) -->
-        <div class="rose-universe">
-            <!-- Визуальные элементы вселенной роз -->
-        </div>
     </div>
 
-    <div class="rose-rain">
-    <!-- Розы будут добавляться сюда -->
-</div>
+    <!-- Вселенная роз (фон) -->
+    <div class="rose-universe">
+        <!-- Визуальные элементы вселенной роз -->
+    </div>
 
+    <!-- Дождь из роз -->
+    <div class="rose-rain">
+        <!-- Розы будут добавляться сюда -->
+    </div>
+
+    <!-- Вспышка при клике -->
     <div class="flash"></div>
 
-
-    <div class="rose-counter">Розы: <span id="roseCount">0</span></div>
-
-    
     <script src="script.js"></script>
 </body>
 </html>
