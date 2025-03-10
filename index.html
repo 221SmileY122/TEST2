@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>С 8 Марта!</title>
     <style>
-        /* Основные стили */
+        /* Основные стили (как в твоём исходном коде) */
         body {
             margin: 0;
             padding: 0;
@@ -139,6 +139,44 @@
                 transform: translate(var(--x), var(--y)) scale(0);
             }
         }
+
+        /* Стили для счетчика роз */
+        .rose-counter {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #d6336c;
+        }
+
+        /* Стили для таблицы лидеров */
+        .leaderboard {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .leaderboard h2 {
+            color: #d6336c;
+            margin-bottom: 15px;
+        }
+
+        .leaderboard table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .leaderboard th, .leaderboard td {
+            padding: 8px 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .leaderboard th {
+            background-color: #f9f9f9;
+            color: #555;
+        }
     </style>
 </head>
 <body>
@@ -152,6 +190,29 @@
 
         <!-- Подпись -->
         <div class="signature">Бери столько, сколько хочешь, потому что ты этого достойна!</div>
+
+        <!-- Счетчик роз -->
+        <div class="rose-counter">
+            Собрано роз: <span id="roseCount">0</span>
+        </div>
+
+        <!-- Таблица лидеров -->
+        <div class="leaderboard">
+            <h2>Топ Дарителей Роз</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Место</th>
+                        <th>Аккаунт</th>
+                        <th>Количество роз</th>
+                        <th>Город</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboardBody">
+                    <!-- Здесь будут данные лидеров -->
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <!-- Снежинки -->
@@ -178,9 +239,15 @@
     <script>
         const button = document.getElementById('flowerButton');
         const container = document.querySelector('.container');
+        const roseCountSpan = document.getElementById('roseCount');
+        let roseCount = 0;
 
         button.addEventListener('click', () => {
-            for (let i = 0; i < 20; i++) { // Количество цветов
+            const flowerCount = 20; // Количество цветов при каждом нажатии
+            roseCount += flowerCount; // Увеличиваем счетчик роз
+            roseCountSpan.textContent = roseCount; // Обновляем отображение счетчика
+
+            for (let i = 0; i < flowerCount; i++) {
                 const flower = document.createElement('div');
                 flower.classList.add('flower');
                 flower.innerHTML = '🌹'; // Эмодзи розы
@@ -196,6 +263,33 @@
                 });
             }
         });
+
+        // Пример данных для таблицы лидеров (замени на реальные данные)
+        const leaderboardData = [
+            { place: 1, account: 'User123', roses: 150, city: 'Москва' },
+            { place: 2, account: 'FlowerLover', roses: 120, city: 'Санкт-Петербург' },
+            { place: 3, account: 'RoseQueen', roses: 90, city: 'Казань' },
+            { place: 4, account: 'SpringJoy', roses: 60, city: 'Екатеринбург' },
+            { place: 5, account: 'March8th', roses: 30, city: 'Новосибирск' }
+        ];
+
+        // Функция для заполнения таблицы лидеров
+        function populateLeaderboard() {
+            const leaderboardBody = document.getElementById('leaderboardBody');
+            leaderboardData.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.place}</td>
+                    <td>${item.account}</td>
+                    <td>${item.roses}</td>
+                    <td>${item.city}</td>
+                `;
+                leaderboardBody.appendChild(row);
+            });
+        }
+
+        // Вызываем функцию для заполнения таблицы при загрузке страницы
+        populateLeaderboard();
     </script>
 </body>
 </html>
