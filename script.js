@@ -5,10 +5,22 @@ const openSkillTreeButton = document.getElementById('openSkillTree');
 const skillTreeModal = document.getElementById('skillTreeModal');
 const closeSkillTreeButton = document.getElementById('closeSkillTree');
 const skillTreeGrid = document.getElementById('skillTreeGrid');
+const roseRainContainer = document.querySelector('.rose-rain');
+const flashElement = document.querySelector('.flash');
 
 // Начальные значения
 let roseCount = 0;
 let clickValue = 1;
+
+// Массив навыков
+let skills = [
+    { id: 'autoClick', name: 'Авто-клик', cost: 100, description: 'Автоматически собирает розы раз в секунду.', isUnlocked: false, effect: () => { autoClick(); } },
+    { id: 'doubleClick', name: 'Двойной клик', cost: 200, description: 'Удваивает количество роз за клик.', isUnlocked: false, effect: () => { clickValue *= 2; } },
+    { id: 'roseBoost', name: 'Ускоритель роз', cost: 500, description: 'Увеличивает количество роз за клик на 5.', isUnlocked: false, effect: () => { clickValue += 5; } },
+    { id: 'universeExpansion', name: 'Расширение Вселенной', cost: 1000, description: 'Улучшает визуальные эффекты Вселенной Роз.', isUnlocked: false, effect: () => { upgradeUniverse(); } },
+    { id: 'rareRose', name: 'Редкая роза', cost: 2000, description: 'Увеличивает шанс выпадения редких роз в 10 раз.', isUnlocked: false, effect: () => { increaseRareRoseChance(); } },
+    // Добавь другие навыки
+];
 
 // Функция для загрузки данных из localStorage
 function loadGame() {
@@ -42,16 +54,6 @@ function updateUI() {
     });
 }
 
-// Массив навыков
-let skills = [
-    { id: 'autoClick', name: 'Авто-клик', cost: 100, description: 'Автоматически собирает розы раз в секунду.', isUnlocked: false, effect: () => { autoClick(); } },
-    { id: 'doubleClick', name: 'Двойной клик', cost: 200, description: 'Удваивает количество роз за клик.', isUnlocked: false, effect: () => { clickValue *= 2; } },
-    { id: 'roseBoost', name: 'Ускоритель роз', cost: 500, description: 'Увеличивает количество роз за клик на 5.', isUnlocked: false, effect: () => { clickValue += 5; } },
-    { id: 'universeExpansion', name: 'Расширение Вселенной', cost: 1000, description: 'Улучшает визуальные эффекты Вселенной Роз.', isUnlocked: false, effect: () => { upgradeUniverse(); } },
-    { id: 'rareRose', name: 'Редкая роза', cost: 2000, description: 'Увеличивает шанс выпадения редких роз в 10 раз.', isUnlocked: false, effect: () => { increaseRareRoseChance(); } },
-    // Добавь другие навыки
-];
-
 // Функция для создания элемента навыка
 function createSkillElement(skill) {
     const skillElement = document.createElement('div');
@@ -67,6 +69,13 @@ function createSkillElement(skill) {
         if (roseCount >= skill.cost && !skill.isUnlocked) {
             roseCount -= skill.cost;
             skill.isUnlocked = true;
+
+            // Добавление анимации при изучении навыка
+            skillElement.classList.add('unlock-animation');
+            skillElement.addEventListener('animationend', () => {
+                skillElement.classList.remove('unlock-animation');
+            });
+
             skill.effect();
             updateUI();
             saveGame();
@@ -110,6 +119,17 @@ function increaseRareRoseChance() {
 // Сбор роз
 flowerButton.addEventListener('click', () => {
     roseCount += clickValue;
+
+    // Показ вспышки
+    flashElement.style.display = 'block';
+    flashElement.classList.add('flash');
+
+    // Скрытие вспышки после завершения анимации
+    flashElement.addEventListener('animationend', () => {
+        flashElement.classList.remove('flash');
+        flashElement.style.display = 'none';
+    });
+
     updateUI();
     saveGame();
 });
@@ -123,20 +143,7 @@ closeSkillTreeButton.addEventListener('click', () => {
     skillTreeModal.style.display = 'none';
 });
 
-// Загрузка данных и заполнение древа навыков при загрузке страницы
-loadGame();
-populateSkillTree();
-
-const flowerButton = document.getElementById('flowerButton');
-
-// Добавление класса для анимации пульсации
-flowerButton.classList.add('pulse');
-
-// Добавление класса для анимации изменения цвета (по желанию)
-// flowerButton.classList.add('color-change');
-
-const roseRainContainer = document.querySelector('.rose-rain');
-
+// Создание роз с определенной частотой
 function createRose() {
     const rose = document.createElement('div');
     rose.classList.add('rose');
@@ -165,65 +172,12 @@ setInterval(() => {
     createRose();
 }, 200); // Создание розы каждые 200 миллисекунд
 
-const flashElement = document.querySelector('.flash');
+// Загрузка данных и заполнение древа навыков при загрузке страницы
+loadGame();
+populateSkillTree();
 
-flowerButton.addEventListener('click', () => {
-    // Показ вспышки
-    flashElement.style.display = 'block';
-    flashElement.classList.add('flash');
+// Добавление класса для анимации пульсации
+flowerButton.classList.add('pulse');
 
-    // Скрытие вспышки после завершения анимации
-    flashElement.addEventListener('animationend', () => {
-        flashElement.classList.remove('flash');
-        flashElement.style.display = 'none';
-    });
-});
-
-import { CountUp } from 'countup.js'; // Убедись, что CountUp.js подключена
-
-const roseCountSpan = document.getElementById('roseCount');
-let roseCount = 0;
-let countUp = new CountUp(roseCountSpan, roseCount, { duration: 1 }); // Создание экземпляра CountUp
-
-flowerButton.addEventListener('click', () => {
-    roseCount += clickValue;
-
-    // Обновление счетчика с анимацией
-    countUp.update(roseCount);
-
-    // ... остальной код ...
-});
-
-function createSkillElement(skill) {
-    const skillElement = document.createElement('div');
-    skillElement.classList.add('skill-tree-item');
-    skillElement.id = skill.id;
-    skillElement.innerHTML = `
-        <h3>${skill.name}</h3>
-        <p>${skill.description}</p>
-        <p>Стоимость: ${skill.cost} роз</p>
-    `;
-
-    skillElement.addEventListener('click', () => {
-        if (roseCount >= skill.cost && !skill.isUnlocked) {
-            roseCount -= skill.cost;
-            skill.isUnlocked = true;
-
-            // Добавление анимации при изучении навыка
-            skillElement.classList.add('unlock-animation');
-            skillElement.addEventListener('animationend', () => {
-                skillElement.classList.remove('unlock-animation');
-            });
-
-            skill.effect();
-            updateUI();
-            saveGame();
-        } else if (skill.isUnlocked) {
-            alert('Этот навык уже изучен!');
-        } else {
-            alert('Недостаточно роз!');
-        }
-    });
-
-    return skillElement;
-}
+// Добавление класса для анимации изменения цвета (по желанию)
+// flowerButton.classList.add('color-change');
