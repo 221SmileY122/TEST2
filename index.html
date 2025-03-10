@@ -147,35 +147,83 @@
             color: #d6336c;
         }
 
-        /* Стили для таблицы лидеров */
-        .leaderboard {
-            margin-top: 30px;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        /* Стили для кнопки открытия древа навыков */
+        .skill-tree-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background: #d6336c;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+            box-shadow: 0 5px 15px rgba(214, 51, 108, 0.4);
         }
 
-        .leaderboard h2 {
+        .skill-tree-button:hover {
+            transform: scale(1.1);
+            background: #ff6b6b;
+        }
+
+        /* Стили для модального окна древа навыков */
+        .skill-tree-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 10;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .skill-tree-content {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            position: relative;
+        }
+
+        .skill-tree-content h2 {
             color: #d6336c;
             margin-bottom: 15px;
         }
 
-        .leaderboard table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
+        .skill-tree-item {
+            margin: 10px;
+            padding: 10px;
+            border: 2px solid #d6336c;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease, color 0.3s ease;
+            display: inline-block;
         }
 
-        .leaderboard th, .leaderboard td {
-            padding: 8px 12px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
+        .skill-tree-item:hover {
+            background: #d6336c;
+            color: #fff;
         }
 
-        .leaderboard th {
-            background-color: #f9f9f9;
+        .skill-tree-item.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #eee;
+            color: #999;
+            border-color: #ccc;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
             color: #555;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -196,22 +244,16 @@
             Собрано роз: <span id="roseCount">0</span>
         </div>
 
-        <!-- Таблица лидеров -->
-        <div class="leaderboard">
-            <h2>Топ Дарителей Роз</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Место</th>
-                        <th>Аккаунт</th>
-                        <th>Количество роз</th>
-                        <th>Город</th>
-                    </tr>
-                </thead>
-                <tbody id="leaderboardBody">
-                    <!-- Здесь будут данные лидеров -->
-                </tbody>
-            </table>
+        <!-- Кнопка открытия древа навыков -->
+        <button class="skill-tree-button" id="openSkillTree">Древо Навыков</button>
+    </div>
+
+    <!-- Модальное окно древа навыков -->
+    <div class="skill-tree-modal" id="skillTreeModal">
+        <div class="skill-tree-content">
+            <h2>Улучшения</h2>
+            <span class="close-button" id="closeSkillTree">&times;</span>
+            <div class="skill-tree-item" id="upgradeClick">Улучшить клик (Текущий урон: <span id="clickDamage">1</span>, Стоимость: <span id="upgradeCost">50</span> роз)</div>
         </div>
     </div>
 
@@ -235,61 +277,68 @@
         </script>
     </div>
 
-    <!-- Скрипт для анимации цветов -->
+    <!-- Скрипт для анимации цветов и древа навыков -->
     <script>
         const button = document.getElementById('flowerButton');
         const container = document.querySelector('.container');
         const roseCountSpan = document.getElementById('roseCount');
         let roseCount = 0;
 
+        // Древо навыков
+        const openSkillTreeButton = document.getElementById('openSkillTree');
+        const skillTreeModal = document.getElementById('skillTreeModal');
+        const closeSkillTreeButton = document.getElementById('closeSkillTree');
+        const upgradeClickButton = document.getElementById('upgradeClick');
+        const clickDamageSpan = document.getElementById('clickDamage');
+        const upgradeCostSpan = document.getElementById('upgradeCost');
+
+        let clickDamage = 1;
+        let upgradeCost = 50;
+
         button.addEventListener('click', () => {
-            const flowerCount = 20; // Количество цветов при каждом нажатии
-            roseCount += flowerCount; // Увеличиваем счетчик роз
-            roseCountSpan.textContent = roseCount; // Обновляем отображение счетчика
+            const flowerCount = clickDamage * 20; // Количество цветов умножается на урон от клика
+            roseCount += flowerCount;
+            roseCountSpan.textContent = roseCount;
 
             for (let i = 0; i < flowerCount; i++) {
                 const flower = document.createElement('div');
                 flower.classList.add('flower');
-                flower.innerHTML = '🌹'; // Эмодзи розы
+                flower.innerHTML = '🌹';
                 flower.style.left = `${Math.random() * 100}%`;
                 flower.style.top = `${Math.random() * 100}%`;
                 flower.style.setProperty('--x', `${(Math.random() - 0.5) * 500}px`);
                 flower.style.setProperty('--y', `${(Math.random() - 0.5) * 500}px`);
                 container.appendChild(flower);
 
-                // Удаляем цветок после завершения анимации
                 flower.addEventListener('animationend', () => {
                     flower.remove();
                 });
             }
         });
 
-        // Пример данных для таблицы лидеров (замени на реальные данные)
-        const leaderboardData = [
-            { place: 1, account: 'User123', roses: 150, city: 'Москва' },
-            { place: 2, account: 'FlowerLover', roses: 120, city: 'Санкт-Петербург' },
-            { place: 3, account: 'RoseQueen', roses: 90, city: 'Казань' },
-            { place: 4, account: 'SpringJoy', roses: 60, city: 'Екатеринбург' },
-            { place: 5, account: 'March8th', roses: 30, city: 'Новосибирск' }
-        ];
+        // Открытие и закрытие древа навыков
+        openSkillTreeButton.addEventListener('click', () => {
+            skillTreeModal.style.display = 'flex';
+        });
 
-        // Функция для заполнения таблицы лидеров
-        function populateLeaderboard() {
-            const leaderboardBody = document.getElementById('leaderboardBody');
-            leaderboardData.forEach(item => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${item.place}</td>
-                    <td>${item.account}</td>
-                    <td>${item.roses}</td>
-                    <td>${item.city}</td>
-                `;
-                leaderboardBody.appendChild(row);
-            });
-        }
+        closeSkillTreeButton.addEventListener('click', () => {
+            skillTreeModal.style.display = 'none';
+        });
 
-        // Вызываем функцию для заполнения таблицы при загрузке страницы
-        populateLeaderboard();
+        // Улучшение клика
+        upgradeClickButton.addEventListener('click', () => {
+            if (roseCount >= upgradeCost) {
+                roseCount -= upgradeCost;
+                clickDamage++;
+                upgradeCost = Math.floor(upgradeCost * 1.5); // Увеличение стоимости улучшения
+
+                roseCountSpan.textContent = roseCount;
+                clickDamageSpan.textContent = clickDamage;
+                upgradeCostSpan.textContent = upgradeCost;
+            } else {
+                alert('Недостаточно роз!');
+            }
+        });
     </script>
 </body>
 </html>
