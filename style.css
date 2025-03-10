@@ -6,6 +6,7 @@ body {
     background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
     overflow: hidden;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
@@ -19,7 +20,10 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     position: relative;
     z-index: 2;
-    width: 80%;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Стили заголовка */
@@ -27,15 +31,15 @@ body {
     font-size: 72px;
     color: #d6336c;
     margin: 0;
-    animation: float 3s ease-in-out infinite;
+    animation: swing 3s ease-in-out infinite;
 }
 
-@keyframes float {
+@keyframes swing {
     0%, 100% {
-        transform: translateY(0);
+        transform: rotate(0deg);
     }
     50% {
-        transform: translateY(-10px);
+        transform: rotate(5deg);
     }
 }
 
@@ -43,11 +47,12 @@ body {
 .button-container {
     margin-top: 20px;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 30px;
     width: 100%;
 }
 
-.rose-button {
+.rose-button, .skill-tree-button {
     padding: 15px 30px;
     font-size: 20px;
     color: #fff;
@@ -59,129 +64,43 @@ body {
     box-shadow: 0 5px 15px rgba(214, 51, 108, 0.4);
 }
 
-.rose-button:hover {
-    transform: scale(1.1);
-    background: #ff6b6b;
-}
-
-.skill-tree-button {
-    padding: 15px 30px;
-    font-size: 20px;
-    color: #fff;
-    background: #d6336c;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: transform 0.3s ease, background 0.3s ease;
-    box-shadow: 0 5px 15px rgba(214, 51, 108, 0.4);
-}
-
-.skill-tree-button:hover {
+.rose-button:hover, .skill-tree-button:hover {
     transform: scale(1.1);
     background: #ff6b6b;
 }
 
 /* Стили счетчика роз */
 .rose-counter {
-    font-size: 20px;
+    font-size: 24px;
     color: #d6336c;
-    margin-bottom: 20px;
-}
-
-/* Стили модального окна древа навыков */
-.skill-tree-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 10;
-    justify-content: center;
-    align-items: center;
-}
-
-.skill-tree-content {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    position: relative;
-}
-
-.skill-tree-content h2 {
-    color: #d6336c;
-    margin-bottom: 15px;
-}
-
-.skill-tree-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 колонки */
-    gap: 10px;
     margin-top: 20px;
 }
 
-.skill-tree-item {
-    margin: 10px;
-    padding: 10px;
-    border: 2px solid #d6336c;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease, color 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    min-height: 100px;
-}
-
-.skill-tree-item:hover {
-    background: #d6336c;
-    color: #fff;
-}
-
-.close-button {
+/* Стили для роз */
+.rose-icon {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
-    color: #555;
-    cursor: pointer;
+    font-size: 24px;
+    color: #d6336c;
+    animation: float-up 1.5s ease-out forwards;
 }
 
-/* Стили вспышки */
-.flash {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0); /* Изначально прозрачный */
-    pointer-events: none;
-    z-index: 100;
-    animation: flash 0.5s ease-out;
-    display: none; /* Изначально скрыт */
-}
-
-@keyframes flash {
+@keyframes float-up {
     0% {
-        background: rgba(255, 255, 255, 0.8);
+        opacity: 1;
+        transform: translateY(0) scale(1);
     }
     100% {
-        background: rgba(255, 255, 255, 0);
+        opacity: 0;
+        transform: translateY(-100px) scale(1.5);
     }
 }
 
-.background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    pointer-events: none;
-    background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+/* Декоративный фон */
+.background-decor {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: url('https://i.imgur.com/ROZbackground.png') no-repeat center center/cover;
+    opacity: 0.2;
+    z-index: 0;
 }
