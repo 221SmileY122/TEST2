@@ -159,3 +159,133 @@ body {
     pointer-events: none;
     /* Добавь сюда визуальные эффекты вселенной роз */
 }
+
+.rose-button {
+
+
+    transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.rose-button:hover {
+    transform: scale(1.1);
+    background: #ff6b6b;
+    box-shadow: 0 7px 20px rgba(214, 51, 108, 0.6);
+}
+
+/* Пульсация */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.rose-button.pulse {
+    animation: pulse 2s infinite;
+}
+
+/* Изменение цвета */
+@keyframes colorChange {
+    0% {
+        background: #d6336c;
+    }
+    50% {
+        background: #ff6b6b;
+    }
+    100% {
+        background: #d6336c;
+    }
+}
+
+.rose-button.color-change {
+    animation: colorChange 5s infinite;
+}
+
+.rose-rain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.rose {
+    position: absolute;
+    width: 30px; /* Размер розы */
+    height: 30px;
+    background-image: url('rose.png'); /* Замени на свою картинку розы */
+    background-size: cover;
+    animation: roseFall linear infinite;
+    opacity: 0;
+}
+
+@keyframes roseFall {
+    0% {
+        transform: translateY(-100%) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.flash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0); /* Изначально прозрачный */
+    pointer-events: none;
+    z-index: 100;
+    animation: flash 0.5s ease-out;
+    display: none; /* Изначально скрыт */
+}
+
+@keyframes flash {
+    0% {
+        background: rgba(255, 255, 255, 0.8);
+    }
+    100% {
+        background: rgba(255, 255, 255, 0);
+    }
+}
+
+.skill-tree-item.unlocked {
+    background: #ff6b6b;
+    color: #fff;
+    box-shadow: 0 3px 10px rgba(255, 107, 107, 0.5);
+}
+
+.skill-tree-item.unlocked:hover {
+    transform: scale(1.05);
+}
+
+/* Анимация при изучении навыка */
+@keyframes unlockAnimation {
+    0% {
+        transform: scale(1);
+        background: #d6336c;
+    }
+    50% {
+        transform: scale(1.1);
+        background: #ff6b6b;
+    }
+    100% {
+        transform: scale(1);
+        background: #ff6b6b;
+    }
+}
+
+.skill-tree-item.unlock-animation {
+    animation: unlockAnimation 1s ease-out;
+}
