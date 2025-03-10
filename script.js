@@ -126,3 +126,104 @@ closeSkillTreeButton.addEventListener('click', () => {
 // Загрузка данных и заполнение древа навыков при загрузке страницы
 loadGame();
 populateSkillTree();
+
+const flowerButton = document.getElementById('flowerButton');
+
+// Добавление класса для анимации пульсации
+flowerButton.classList.add('pulse');
+
+// Добавление класса для анимации изменения цвета (по желанию)
+// flowerButton.classList.add('color-change');
+
+const roseRainContainer = document.querySelector('.rose-rain');
+
+function createRose() {
+    const rose = document.createElement('div');
+    rose.classList.add('rose');
+    roseRainContainer.appendChild(rose);
+
+    // Случайные значения
+    const randomX = Math.random() * 100; // Позиция по горизонтали
+    const randomDelay = Math.random() * 5; // Задержка перед началом падения
+    const randomDuration = Math.random() * 10 + 5; // Длительность падения
+    const randomSize = Math.random() * 20 + 20; // Размер розы
+
+    rose.style.left = `${randomX}%`;
+    rose.style.animationDelay = `${randomDelay}s`;
+    rose.style.animationDuration = `${randomDuration}s`;
+    rose.style.width = `${randomSize}px`;
+    rose.style.height = `${randomSize}px`;
+
+    // Удаление розы после завершения анимации
+    rose.addEventListener('animationend', () => {
+        rose.remove();
+    });
+}
+
+// Создание роз с определенной частотой
+setInterval(() => {
+    createRose();
+}, 200); // Создание розы каждые 200 миллисекунд
+
+const flashElement = document.querySelector('.flash');
+
+flowerButton.addEventListener('click', () => {
+    // Показ вспышки
+    flashElement.style.display = 'block';
+    flashElement.classList.add('flash');
+
+    // Скрытие вспышки после завершения анимации
+    flashElement.addEventListener('animationend', () => {
+        flashElement.classList.remove('flash');
+        flashElement.style.display = 'none';
+    });
+});
+
+import { CountUp } from 'countup.js'; // Убедись, что CountUp.js подключена
+
+const roseCountSpan = document.getElementById('roseCount');
+let roseCount = 0;
+let countUp = new CountUp(roseCountSpan, roseCount, { duration: 1 }); // Создание экземпляра CountUp
+
+flowerButton.addEventListener('click', () => {
+    roseCount += clickValue;
+
+    // Обновление счетчика с анимацией
+    countUp.update(roseCount);
+
+    // ... остальной код ...
+});
+
+function createSkillElement(skill) {
+    const skillElement = document.createElement('div');
+    skillElement.classList.add('skill-tree-item');
+    skillElement.id = skill.id;
+    skillElement.innerHTML = `
+        <h3>${skill.name}</h3>
+        <p>${skill.description}</p>
+        <p>Стоимость: ${skill.cost} роз</p>
+    `;
+
+    skillElement.addEventListener('click', () => {
+        if (roseCount >= skill.cost && !skill.isUnlocked) {
+            roseCount -= skill.cost;
+            skill.isUnlocked = true;
+
+            // Добавление анимации при изучении навыка
+            skillElement.classList.add('unlock-animation');
+            skillElement.addEventListener('animationend', () => {
+                skillElement.classList.remove('unlock-animation');
+            });
+
+            skill.effect();
+            updateUI();
+            saveGame();
+        } else if (skill.isUnlocked) {
+            alert('Этот навык уже изучен!');
+        } else {
+            alert('Недостаточно роз!');
+        }
+    });
+
+    return skillElement;
+}
