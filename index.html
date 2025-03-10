@@ -3,342 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>С 8 Марта!</title>
-    <style>
-        /* Основные стили (как в твоём исходном коде) */
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-            font-family: 'Arial', sans-serif;
-            overflow: hidden;
-        }
-
-        /* Контейнер для текста */
-        .container {
-            text-align: center;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 40px 60px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 2s ease-in-out;
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Заголовок */
-        h1 {
-            font-size: 72px;
-            color: #d6336c;
-            margin: 0;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        /* Подзаголовок */
-        p {
-            font-size: 24px;
-            color: #555;
-            margin-top: 20px;
-        }
-
-        /* Кнопка */
-        .button {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 15px 30px;
-            font-size: 20px;
-            color: #fff;
-            background: #d6336c;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: transform 0.3s ease, background 0.3s ease;
-            box-shadow: 0 5px 15px rgba(214, 51, 108, 0.4);
-        }
-
-        .button:hover {
-            transform: scale(1.1);
-            background: #ff6b6b;
-        }
-
-        /* Подпись под кнопкой */
-        .signature {
-            margin-top: 15px;
-            font-size: 16px;
-            color: #777;
-        }
-
-        /* Анимация появления */
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Анимация плавания */
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        /* Эффект снежинок */
-        .snowflakes {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .snowflake {
-            position: absolute;
-            color: #fff;
-            font-size: 24px;
-            animation: fall linear infinite;
-        }
-
-        @keyframes fall {
-            0% {
-                transform: translateY(-10%);
-            }
-            100% {
-                transform: translateY(110%);
-            }
-        }
-
-        /* Анимация цветов */
-        .flower {
-            position: absolute;
-            font-size: 30px;
-            animation: explode 1.5s ease-out forwards;
-            z-index: 3;
-        }
-
-        @keyframes explode {
-            0% {
-                opacity: 1;
-                transform: translate(0, 0) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: translate(var(--x), var(--y)) scale(0);
-            }
-        }
-
-        /* Стили для счетчика роз */
-        .rose-counter {
-            margin-top: 20px;
-            font-size: 20px;
-            color: #d6336c;
-        }
-
-        /* Стили для кнопки открытия древа навыков */
-        .skill-tree-button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            color: #fff;
-            background: #d6336c;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: transform 0.3s ease, background 0.3s ease;
-            box-shadow: 0 5px 15px rgba(214, 51, 108, 0.4);
-        }
-
-        .skill-tree-button:hover {
-            transform: scale(1.1);
-            background: #ff6b6b;
-        }
-
-        /* Стили для модального окна древа навыков */
-        .skill-tree-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 10;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .skill-tree-content {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            position: relative;
-        }
-
-        .skill-tree-content h2 {
-            color: #d6336c;
-            margin-bottom: 15px;
-        }
-
-        .skill-tree-item {
-            margin: 10px;
-            padding: 10px;
-            border: 2px solid #d6336c;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s ease, color 0.3s ease;
-            display: inline-block;
-        }
-
-        .skill-tree-item:hover {
-            background: #d6336c;
-            color: #fff;
-        }
-
-        .skill-tree-item.disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            background: #eee;
-            color: #999;
-            border-color: #ccc;
-        }
-
-        .close-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 20px;
-            color: #555;
-            cursor: pointer;
-        }
-    </style>
+    <title>Розовая Вселенная</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Контейнер с текстом -->
-    <div class="container">
-        <h1>С 8 МАРТА!</h1>
-        <p>Пусть весна принесёт вам радость, тепло и вдохновение!</p>
-
-        <!-- Кнопка -->
-        <button class="button" id="flowerButton">Нажми, чтобы получить букет цветов</button>
-
-        <!-- Подпись -->
-        <div class="signature">Бери столько, сколько хочешь, потому что ты этого достойна!</div>
-
-        <!-- Счетчик роз -->
-        <div class="rose-counter">
-            Собрано роз: <span id="roseCount">0</span>
+    <div class="game-container">
+        <!-- Главный экран -->
+        <div class="main-screen">
+            <h1>Розовая Вселенная</h1>
+            <p>Создай свою империю роз!</p>
+            <div class="rose-counter">Розы: <span id="roseCount">0</span></div>
+            <button class="rose-button" id="flowerButton">Собрать розы</button>
+            <button class="skill-tree-button" id="openSkillTree">Древо Навыков</button>
         </div>
 
-        <!-- Кнопка открытия древа навыков -->
-        <button class="skill-tree-button" id="openSkillTree">Древо Навыков</button>
-    </div>
+        <!-- Древо навыков (модальное окно) -->
+        <div class="skill-tree-modal" id="skillTreeModal">
+            <div class="skill-tree-content">
+                <h2>Древо Навыков</h2>
+                <span class="close-button" id="closeSkillTree">&times;</span>
+                <div class="skill-tree-grid" id="skillTreeGrid">
+                    <!-- Здесь будут навыки -->
+                </div>
+            </div>
+        </div>
 
-    <!-- Модальное окно древа навыков -->
-    <div class="skill-tree-modal" id="skillTreeModal">
-        <div class="skill-tree-content">
-            <h2>Улучшения</h2>
-            <span class="close-button" id="closeSkillTree">&times;</span>
-            <div class="skill-tree-item" id="upgradeClick">Улучшить клик (Текущий урон: <span id="clickDamage">1</span>, Стоимость: <span id="upgradeCost">50</span> роз)</div>
+        <!-- Вселенная роз (фон) -->
+        <div class="rose-universe">
+            <!-- Визуальные элементы вселенной роз -->
         </div>
     </div>
 
-    <!-- Снежинки -->
-    <div class="snowflakes">
-        <!-- Генерация снежинок -->
-        <script>
-            const snowflakesContainer = document.querySelector('.snowflakes');
-            const snowflakeCount = 50;
-
-            for (let i = 0; i < snowflakeCount; i++) {
-                const snowflake = document.createElement('div');
-                snowflake.classList.add('snowflake');
-                snowflake.innerHTML = '❄';
-                snowflake.style.left = `${Math.random() * 100}%`;
-                snowflake.style.animationDuration = `${Math.random() * 5 + 5}s`;
-                snowflake.style.animationDelay = `${Math.random() * 5}s`;
-                snowflake.style.opacity = Math.random();
-                snowflakesContainer.appendChild(snowflake);
-            }
-        </script>
-    </div>
-
-    <!-- Скрипт для анимации цветов и древа навыков -->
-    <script>
-        const button = document.getElementById('flowerButton');
-        const container = document.querySelector('.container');
-        const roseCountSpan = document.getElementById('roseCount');
-        let roseCount = 0;
-
-        // Древо навыков
-        const openSkillTreeButton = document.getElementById('openSkillTree');
-        const skillTreeModal = document.getElementById('skillTreeModal');
-        const closeSkillTreeButton = document.getElementById('closeSkillTree');
-        const upgradeClickButton = document.getElementById('upgradeClick');
-        const clickDamageSpan = document.getElementById('clickDamage');
-        const upgradeCostSpan = document.getElementById('upgradeCost');
-
-        let clickDamage = 1;
-        let upgradeCost = 50;
-
-        button.addEventListener('click', () => {
-            const flowerCount = clickDamage * 20; // Количество цветов умножается на урон от клика
-            roseCount += flowerCount;
-            roseCountSpan.textContent = roseCount;
-
-            for (let i = 0; i < flowerCount; i++) {
-                const flower = document.createElement('div');
-                flower.classList.add('flower');
-                flower.innerHTML = '🌹';
-                flower.style.left = `${Math.random() * 100}%`;
-                flower.style.top = `${Math.random() * 100}%`;
-                flower.style.setProperty('--x', `${(Math.random() - 0.5) * 500}px`);
-                flower.style.setProperty('--y', `${(Math.random() - 0.5) * 500}px`);
-                container.appendChild(flower);
-
-                flower.addEventListener('animationend', () => {
-                    flower.remove();
-                });
-            }
-        });
-
-        // Открытие и закрытие древа навыков
-        openSkillTreeButton.addEventListener('click', () => {
-            skillTreeModal.style.display = 'flex';
-        });
-
-        closeSkillTreeButton.addEventListener('click', () => {
-            skillTreeModal.style.display = 'none';
-        });
-
-        // Улучшение клика
-        upgradeClickButton.addEventListener('click', () => {
-            if (roseCount >= upgradeCost) {
-                roseCount -= upgradeCost;
-                clickDamage++;
-                upgradeCost = Math.floor(upgradeCost * 1.5); // Увеличение стоимости улучшения
-
-                roseCountSpan.textContent = roseCount;
-                clickDamageSpan.textContent = clickDamage;
-                upgradeCostSpan.textContent = upgradeCost;
-            } else {
-                alert('Недостаточно роз!');
-            }
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
