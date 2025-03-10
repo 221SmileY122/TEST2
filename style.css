@@ -3,6 +3,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -18,7 +19,7 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     position: relative;
     z-index: 2;
-    width: 80%; /* Добавил ширину для контейнера */
+    width: 80%;
 }
 
 /* Стили заголовка */
@@ -41,8 +42,9 @@ body {
 /* Стили кнопок */
 .button-container {
     margin-top: 20px;
-    display: flex; /* Добавил flex для горизонтального расположения кнопок */
-    justify-content: space-around; /* Расположил кнопки по горизонтали */
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
 }
 
 .rose-button {
@@ -63,7 +65,7 @@ body {
 }
 
 .skill-tree-button {
-    padding: 15px 30px; /* Увеличил размер кнопки */
+    padding: 15px 30px;
     font-size: 20px;
     color: #fff;
     background: #d6336c;
