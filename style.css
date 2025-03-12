@@ -1,106 +1,50 @@
-/* Общие стили */
 body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     margin: 0;
-    padding: 0;
+    background-color: #ffe6e6; /* Розово-бардовый фон */
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
 }
 
-.game-container {
-    text-align: center;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 40px 60px;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    position: relative;
-    z-index: 2;
-    width: 60%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* Стили заголовка */
-.title {
-    font-size: 72px;
-    color: #d6336c;
-    margin: 0;
-    animation: swing 3s ease-in-out infinite;
-}
-
-@keyframes swing {
-    0%, 100% {
-        transform: rotate(0deg);
-    }
-    50% {
-        transform: rotate(5deg);
-    }
-}
-
-/* Стили кнопок */
 .button-container {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    width: 100%;
+    position: relative;
 }
 
-.rose-button, .skill-tree-button {
-    padding: 15px 30px;
-    font-size: 20px;
-    color: #fff;
-    background: #d6336c;
+.button {
+    background-color: #ff69b4; /* Розово-бардовый цвет кнопки */
+    color: white;
     border: none;
-    border-radius: 50px;
+    border-radius: 25px; /* Скругленные края */
+    padding: 15px 30px;
+    font-size: 18px;
     cursor: pointer;
-    transition: transform 0.3s ease, background 0.3s ease;
-    box-shadow: 0 5px 15px rgba(214, 51, 108, 0.4);
+    transition: background-color 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Тень для современного вида */
 }
 
-.rose-button:hover, .skill-tree-button:hover {
-    transform: scale(1.1);
-    background: #ff6b6b;
+.button:hover {
+    background-color: #ff1493; /* Изменение цвета при наведении */
 }
 
-/* Стили счетчика роз */
-.rose-counter {
-    font-size: 24px;
-    color: #d6336c;
-    margin-top: 20px;
-}
-
-/* Стили для роз */
-.rose-icon {
+.rose {
     position: absolute;
-    font-size: 24px;
-    color: #d6336c;
-    animation: float-up 1.5s ease-out forwards;
+    width: 20px;
+    height: 20px;
+    background-color: #ff69b4; /* Цвет розочек */
+    border-radius: 50%;
+    opacity: 0;
+    animation: explode 2s ease-out forwards;
 }
 
-@keyframes float-up {
+@keyframes explode {
     0% {
+        transform: scale(0) translateY(0);
         opacity: 1;
-        transform: translateY(0) scale(1);
     }
     100% {
+        transform: scale(1) translateY(-150px);
         opacity: 0;
-        transform: translateY(-100px) scale(1.5);
     }
-}
-
-/* Декоративный фон */
-.background-decor {
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    background: url('https://i.imgur.com/ROZbackground.png') no-repeat center center/cover;
-    opacity: 0.2;
-    z-index: 0;
 }
