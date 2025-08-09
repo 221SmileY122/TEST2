@@ -1,105 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>С 8 МАРТА!</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #ff99cc, #990033);
-      font-family: Arial, sans-serif;
-      color: white;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 20px;
-      animation: sway 3s infinite ease-in-out;
-    }
-
-    @keyframes sway {
-      0%, 100% { transform: rotate(-5deg); }
-      50% { transform: rotate(5deg); }
-    }
-
-    p {
-      font-size: 1.2rem;
-      margin-top: 20px;
-    }
-
-    .btn {
-      background: #ff6699;
-      border: none;
-      padding: 15px 30px;
-      font-size: 1.5rem;
-      border-radius: 50px;
-      color: white;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      transition: background 0.3s ease, transform 0.2s ease;
-    }
-
-    .btn:hover {
-      background: #ff3366;
-      transform: scale(1.1);
-    }
-
-    .roses {
-      position: absolute;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      pointer-events: none;
-    }
-
-    .rose {
-      position: absolute;
-      width: 30px;
-      height: 30px;
-      background: url('https://cdn-icons-png.flaticon.com/512/227/227594.png') no-repeat center/cover;
-      opacity: 0;
-      animation: explode 1s forwards ease-out;
-    }
-
-    @keyframes explode {
-      0% { opacity: 1; transform: scale(0.5) translate(0, 0); }
-      100% { opacity: 0; transform: scale(1.5) translate(var(--x), var(--y)); }
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Поздравление для Станислава</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>С 8 МАРТА!</h1>
-  <button class="btn" onclick="explodeRoses(event)">Получить букет роз</button>
-  <p>Бери столько, сколько хочешь, потому что ты этого достойна!</p>
-
-  <script>
-    function explodeRoses(e) {
-      const button = e.target;
-      const rosesContainer = document.createElement('div');
-      rosesContainer.classList.add('roses');
-      document.body.appendChild(rosesContainer);
-
-      for (let i = 0; i < 20; i++) {
-        const rose = document.createElement('div');
-        rose.classList.add('rose');
-        rose.style.setProperty('--x', `${Math.random() * 200 - 100}px`);
-        rose.style.setProperty('--y', `${Math.random() * 200 - 100}px`);
-        rosesContainer.appendChild(rose);
-      }
-
-      setTimeout(() => {
-        rosesContainer.remove();
-      }, 1000);
-    }
-  </script>
+  <div class="container">
+    <button id="celebrateBtn">Нажми меня</button>
+    <div id="message" class="hidden">С Днём рождения, Станислав!</div>
+    <canvas id="confetti"></canvas>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
