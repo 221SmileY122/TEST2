@@ -18,22 +18,18 @@ function createConfettiPiece() {
   return {
     x: randomRange(0, canvas.width),
     y: randomRange(-canvas.height, 0),
-    size: randomRange(5, 10),
-    color: `hsl(${randomRange(180, 240)}, 70%, 60%)`,
-    speed: randomRange(2, 5),
-    drift: randomRange(-1, 1),
-    rotation: randomRange(0, 360),
-    rotationSpeed: randomRange(-5, 5)
+    size: randomRange(4, 8),
+    color: `hsl(${randomRange(190, 230)}, 80%, 70%)`,
+    speed: randomRange(1, 3),
+    drift: randomRange(-0.5, 0.5)
   };
 }
 
 function drawConfettiPiece(p) {
-  ctx.save();
-  ctx.translate(p.x, p.y);
-  ctx.rotate((p.rotation * Math.PI) / 180);
+  ctx.beginPath();
+  ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
   ctx.fillStyle = p.color;
-  ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
-  ctx.restore();
+  ctx.fill();
 }
 
 function updateConfetti() {
@@ -42,7 +38,6 @@ function updateConfetti() {
   confetti.forEach((p, i) => {
     p.y += p.speed;
     p.x += p.drift;
-    p.rotation += p.rotationSpeed;
 
     if (p.y > canvas.height) {
       if (running) {
@@ -58,7 +53,7 @@ function updateConfetti() {
   requestAnimationFrame(updateConfetti);
 }
 
-function burstConfetti(count = 100) {
+function burstConfetti(count = 80) {
   for (let i = 0; i < count; i++) {
     confetti.push(createConfettiPiece());
   }
@@ -66,12 +61,12 @@ function burstConfetti(count = 100) {
 
 document.getElementById("startBtn").addEventListener("click", () => {
   running = true;
-  burstConfetti(150);
+  burstConfetti(120);
   setInterval(() => {
-    if (running) burstConfetti(10);
-  }, 200);
+    if (running) burstConfetti(5);
+  }, 150);
 });
 
-// Первоначальный залп при заходе
-burstConfetti(80);
+// Первоначальный залп при загрузке
+burstConfetti(50);
 updateConfetti();
