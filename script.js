@@ -1,43 +1,41 @@
-const canvas = document.getElementById("confettiCanvas");
-const ctx = canvas.getContext("2d");
-let confetti = [];
-let running = false;
+function burstConfettiExplosion(count = 100) {
+  const centerX = canvas.width / 2;
+  const centerY = canvas.height / 2;
 
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-window.addEventListener("resize", resizeCanvas);
-resizeCanvas();
+  for (let i = 0; i < count; i++) {
+    const angle = randomRange(0, 2 * Math.PI);
+    const distance = randomRange(0, 30); // стартовая "глубина" взрыва
+    const speed = randomRange(4, 8);     // исходная скорость взрыва
 
-function randomRange(min, max) {
-  return Math.random() * (max - min) + min;
-}
-
-function createConfettiPiece() {
-  return {
-    x: randomRange(0, canvas.width),
-    y: randomRange(-canvas.height, 0),
-    size: randomRange(4, 8),
-    color: `hsl(${randomRange(190, 230)}, 80%, 70%)`,
-    speed: randomRange(1, 3),
-    drift: randomRange(-0.5, 0.5)
-  };
+    confetti.push({
+      x: centerX + Math.cos(angle) * distance,
+      y: centerY + Math.sin(angle) * distance,
+      size: randomRange(4, 9),
+      color: `hsl(${randomRange(190, 230)}, 80%, 70%)`,
+      speedY: Math.sin(angle) * speed,
+      speedX: Math.cos(angle) * speed,
+      drift: randomRange(-0.5, 0.5), // лёгкая неустойчивость по горизонтали
+      decay: randomRange(0.96, 0.985) // плавное замедление
+    });
+  }
 }
 
-function drawConfettiPiece(p) {
-  ctx.beginPath();
-  ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-  ctx.fillStyle = p.color;
-  ctx.fill();
-}
-
+// Подправь updateConfetti — обработай разлёт взрыва:
 function updateConfetti() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   confetti.forEach((p, i) => {
-    p.y += p.speed;
-    p.x += p.drift;
+    // Если это взрывная частица
+    if ('speedX' in p && 'speedY' in p && 'decay' in p) {
+      p.x += p.speedX;
+      p.y += p.speedY;
+      p.speedX *= p.decay;
+      p.speedY *= p.decay;
+    } else {
+      // Обычные: просто падают
+      p.y += p.speed;
+      p.x += p.drift;
+    }
 
     if (p.y > canvas.height) {
       if (running) {
@@ -53,20 +51,15 @@ function updateConfetti() {
   requestAnimationFrame(updateConfetti);
 }
 
-function burstConfetti(count = 80) {
-  for (let i = 0; i < count; i++) {
-    confetti.push(createConfettiPiece());
-  }
-}
-
+// Теперь на нажатие кнопки запусти эффект взрыва:
 document.getElementById("startBtn").addEventListener("click", () => {
   running = true;
-  burstConfetti(120);
+  burstConfettiExplosion(120); // взрыв
   setInterval(() => {
-    if (running) burstConfetti(5);
-  }, 150);
+    if (running) burstConfetti(5); // обычные падающие добавляются
+  }, 180);
 });
 
-// Первоначальный залп при загрузке
-burstConfetti(50);
+// Первоначальный залп можно оставить как есть или уменьшить:
+burstConfetti(40);
 updateConfetti();
