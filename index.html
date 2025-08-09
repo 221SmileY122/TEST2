@@ -1,66 +1,18 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>С Днём Рождения — поздравление</title>
-
-  <!-- Google font -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>С Днём Рождения, Станислав!</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="stage" role="main">
-    <div class="card" id="card" aria-live="polite">
-      <header class="card-header">
-        <h1 class="title">С Днём Рождения, <span id="recipient">Станислав</span>!</h1>
-        <p class="subtitle">Нажми на кнопку и начнётся праздник 🎉</p>
-      </header>
-
-      <section class="controls">
-        <label for="nameInput" class="visually-hidden">Имя поздравляемого</label>
-        <input id="nameInput" type="text" placeholder="Имя друга..." aria-label="Имя поздравляемого">
-        <div class="buttons">
-          <button id="celebrateBtn" class="btn primary">Праздник!</button>
-          <button id="littleBtn" class="btn outline">Сюрприз</button>
-          <button id="saveBtn" class="btn">Сохранить открытку</button>
-          <button id="shareBtn" class="btn">Поделиться</button>
-        </div>
-      </section>
-
-      <div class="stage-visuals" aria-hidden="true">
-        <canvas id="confetti"></canvas>
-        <div id="balloons" class="balloons"></div>
-        <svg class="cake" viewBox="0 0 220 160" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <!-- simple decorative cake -->
-          <rect x="30" y="70" width="160" height="60" rx="12" fill="#fff7f0" stroke="#ffd1b6" stroke-width="3"/>
-          <rect x="50" y="50" width="120" height="40" rx="10" fill="#ffd1b6"/>
-          <g class="candle">
-            <rect x="104" y="18" width="12" height="40" rx="3" fill="#fff"/>
-            <path d="M110 16 q6 -12 0 -18 q-6 6 0 18z" fill="#ffbf00"/>
-            <circle cx="110" cy="10" r="4" fill="#ff6b6b"/>
-          </g>
-        </svg>
-      </div>
-
-      <footer class="footer">
-        <small>Сделано с ❤️ для друга</small>
-      </footer>
-    </div>
-  </main>
-
-  <!-- Hidden modal message -->
-  <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal-card">
-      <h2 id="modalTitle">С Днём Рождения!</h2>
-      <p id="modalText">Пусть сбудутся все мечты и будет море счастья!</p>
-      <div class="modal-actions">
-        <button id="closeModal" class="btn primary">Спасибо!</button>
-      </div>
-    </div>
+  <div class="container">
+    <h1>С Днём Рождения, <span>Станислав</span>!</h1>
+    <p class="subtitle">От лучшего 3D художника тебе ❤️</p>
+    <button id="startBtn">Нажми меня</button>
+    <canvas id="confettiCanvas"></canvas>
   </div>
-
-  <script src="script.js" defer></script>
+  <script src="script.js"></script>
 </body>
 </html>
